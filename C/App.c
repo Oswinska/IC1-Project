@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -13,30 +13,23 @@ typedef struct {
     char number[8];
     unsigned short price_per_hour;
     short status;
-    customer person_taking;
 }car;
 
-void rent_car(car car, customer client, int time) {
-    client.debt += car.price_per_hour * time;
-    car.person_taking = client;
+void rent_car(car* car, customer* client, int time) {
+    printf("Debt now is: %d\n", client->debt);
+    client->debt += car->price_per_hour * time;
+    printf("Debt now is: %d\n", client->debt);
 }
 
-void change_name(customer client) {
-    printf("What's your new name?\n");
-    char* newName;
-    scanf("%s", &newName);
 
-    memset(client.surname, 0, 15);
-    memcpy(client.surname, newName, strlen(newName));
-}
-
-void change_surname(customer client) {
-    printf("What's your new surname?\n");
-    char* newSurname;
-    scanf("%s", &newSurname);
-
-    memset(client.surname, 0, 15);
-    memcpy(client.surname, newSurname, strlen(newSurname));
+void change_number(car* automobile) {
+    printf("Type new number. Only 8 symbols!\n");
+    char *newNumber;
+    printf("Step0 succ!\n");
+    scanf("%s", newNumber);
+    printf("Step1 succ\n");
+    strcpy(automobile->number, newNumber);
+    printf("Step2 succ\n");
 }
 
 void save_file(car car, customer client) {
@@ -52,7 +45,7 @@ void open_file() {
         exit(1);
     };
     for (int i = 0; i < 3; i++) {
-        fscanf(file, "%s", &line);
+        fscanf(file, "%s", line);
 
     };
 }
@@ -62,11 +55,11 @@ int menu()
     int command = 0;
     printf("Welcome to the Car Service! Write the digit: \n 1 - Rent a car. \n 2 - Change name.\n ");
     printf("3 - Change surname.\n 4 - Save changes.\n 5 - Exit the program.\n");
-    while (command < 1 || command > 5)
+    while (command < 1 || command > 4)
     {
         command = 10;
         scanf("%d", &command);
-        if (command >= 1 && command <= 5)
+        if (command >= 1 && command <= 4)
             return command;
         printf("You have written wrong digit. Please, write another one from the list.\n");
     }
@@ -74,65 +67,53 @@ int menu()
 
 int op_choose()
 {
+    customer cust;
+    cust.name = "John";
+    cust.surname = "Wilkins";
+    cust.account_number = "1324552342123428534";
+    cust.debt = 64000;
 
-    customer* customers;
+    car cars;
+    char *newName = "AN9728U";
+    memcpy(cars.number, newName, strlen(newName));
+    cars.price_per_hour = 700;
+    cars.status = 0;
 
-    customer cust1;
-    char name = "John";
-    cust1.name = "John";
-    cust1.surname = "Wilkins";
-    cust1.account_number = "1324552342123428534";
-    unsigned short debt1 = 0;
-
-    customers[0] = cust1;
-    customers[1] = cust1;
 
     int command = menu();
+
     switch (command)
     {
 
     case 1:
     {
 
-        printf("What car do you want to rent?\n");
+        printf("For how many hours do you want to rent?\n");
         int val;
         scanf("%d", &val);
-        break;
+        rent_car(&cars, &cust, val);
+	printf("Debt is %d\n", cust.debt);
+	break;
 
     }
 
     case 2:
     {
-
-        printf("What value do you want to delete?\n");
-        int val;
-        scanf("%d", &val);
+	printf("Number is: %s\n", cars.number);
+        change_number(&cars);
+        printf("Number is: %s\n", cars.number);
         break;
-
     }
 
     case 3:
     {
 
-        printf("Printing the tree...\n\n");
-        printf("\nTree was printed.\n\n");
-        break;
+        printf("Saving the file...\n\n");
+	break;
 
     }
 
     case 4:
-    {
-
-        printf("Saving the tree...\n\n");
-        FILE* output;
-        output = fopen("out.txt", "w+");
-        fclose(output);
-        printf("\nTree successfully saved in file out.txt\n\n");
-        break;
-
-    }
-
-    case 5:
     {
 
         printf("Exiting...");
@@ -154,4 +135,3 @@ int main()
         op_choose();
     }
 }
-
