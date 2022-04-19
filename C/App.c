@@ -22,39 +22,21 @@ void rent_car(car* car, customer* client, int time) {
 }
 
 
-void change_number(car* automobile) {
-    printf("Type new number. Only 8 symbols!\n");
-    char *newNumber;
-    printf("Step0 succ!\n");
-    scanf("%s", newNumber);
-    printf("Step1 succ\n");
-    strcpy(automobile->number, newNumber);
-    printf("Step2 succ\n");
+void change_number(car* automobile, char *newnum) {
+    printf("Step1 succ!\n");
+    memcpy(automobile->number, newnum, strlen(newnum));
+    printf("Step2 succ!\n");
 }
 
 void save_file(car car, customer client) {
     FILE* save_file = fopen("backup.txt", "rw+");
 }
 
-void open_file() {
-    FILE* file;
-    char* line;
-
-    if ((file = fopen("backup.txt", "r+")) == NULL) {
-        printf("cannot open file.\\n");
-        exit(1);
-    };
-    for (int i = 0; i < 3; i++) {
-        fscanf(file, "%s", line);
-
-    };
-}
-
 int menu()
 {
     int command = 0;
-    printf("Welcome to the Car Service! Write the digit: \n 1 - Rent a car. \n 2 - Change name.\n ");
-    printf("3 - Change surname.\n 4 - Save changes.\n 5 - Exit the program.\n");
+    printf("Welcome to the Car Service! Write the digit: \n 1 - Rent a car. \n 2 - Change car number.\n ");
+    printf("3 - Save changes to the file.\n 4 - Exit the program.\n");
     while (command < 1 || command > 4)
     {
         command = 10;
@@ -62,6 +44,7 @@ int menu()
         if (command >= 1 && command <= 4)
             return command;
         printf("You have written wrong digit. Please, write another one from the list.\n");
+	exit(0);
     }
 }
 
@@ -74,8 +57,7 @@ int op_choose()
     cust.debt = 64000;
 
     car cars;
-    char *newName = "AN9728U";
-    memcpy(cars.number, newName, strlen(newName));
+    strcpy(cars.number, "AN9728U");
     cars.price_per_hour = 700;
     cars.status = 0;
 
@@ -100,8 +82,19 @@ int op_choose()
     case 2:
     {
 	printf("Number is: %s\n", cars.number);
-        change_number(&cars);
+	printf("Price is: %d\n", cars.price_per_hour);
+	
+	printf("Type new number. Only 8 symbols!\n");
+        char *newnum;
+        printf("Step0 succ!\n");
+        scanf("%s", &newnum);
+
+        printf("Step1 succ!\n");
+        memcpy(cars.number, &newnum, sizeof(newnum));
+        printf("Step2 succ!\n");
+
         printf("Number is: %s\n", cars.number);
+	printf("Price is: %d\n", cars.price_per_hour);
         break;
     }
 
@@ -109,6 +102,13 @@ int op_choose()
     {
 
         printf("Saving the file...\n\n");
+	FILE* save_file = fopen("backup.txt", "w");
+	printf("File opened.");
+	fprintf(save_file, "Customer: %s %s %s %d\n", cust.name, cust.surname, cust.account_number, cust.debt);
+	printf("Customer written");
+	fprintf(save_file, "Car: %s %d %d", cars.number, cars.price_per_hour, cars.status);
+	printf("Car written");
+	fclose(save_file);
 	break;
 
     }
