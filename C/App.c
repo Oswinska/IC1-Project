@@ -6,7 +6,7 @@ typedef struct {
     char* name;
     char* surname;
     char* account_number;
-    unsigned short debt;
+    unsigned int debt;
 }customer;
 
 typedef struct {
@@ -87,7 +87,7 @@ int op_choose()
 	printf("Type new number. Only 8 symbols!\n");
         char *newnum;
         printf("Step0 succ!\n");
-        scanf("%s", &newnum);
+        scanf("%s", newnum);
 
         printf("Step1 succ!\n");
         memcpy(cars.number, &newnum, sizeof(newnum));
