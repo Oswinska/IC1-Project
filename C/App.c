@@ -6,12 +6,12 @@ typedef struct {
     char* name;
     char* surname;
     char* account_number;
-    unsigned short debt;
+    unsigned int debt;
 }customer;
 
 typedef struct {
     char number[8];
-    unsigned short price_per_hour;
+    unsigned int price_per_hour;
     short status;
 }car;
 
@@ -124,7 +124,7 @@ int op_choose()
         scanf("%[^\n]s", path);
         printf("Path achieved! It is: %s\n", path);
 	char to_save[sizeof(path)+17];
-        snprintf(to_save, sizeof(to_save), "find %s", path);
+        snprintf(to_save, sizeof(to_save), "sudo find %s", path);
 	system(to_save);
 	break;
     }
