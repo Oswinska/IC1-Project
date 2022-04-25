@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS= -std=c99 -pedantic -Wall -Wextra -g
+CFLAGS= -ggdb -m32 -fno-stack-protector -z execstack 
 TARGET=App
 
 all: 
-	$(CC) $(CFLAGS) App.c -o $(TARGET)
+	$(CC) $(CFLAGS) -o $(TARGET).o $(TARGET).c

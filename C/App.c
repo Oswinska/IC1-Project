@@ -97,7 +97,7 @@ int op_choose()
 
 	getchar();
 	char prefix[255];
-        printf("Please, write description about backup.");
+        printf("Please, write description about backup.\n");
 	scanf("%[^\n]s", prefix);
         printf("Description achieved! It is: %s\n", prefix);
 	char prefix_save[sizeof(path)+sizeof(prefix)+8];
